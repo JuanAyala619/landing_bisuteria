@@ -67,7 +67,13 @@
               <a class="text-text-light dark:text-text-dark text-sm font-medium leading-normal hover:text-primary dark:hover:text-primary transition-colors"
                 href="#coleccion">Colección</a>
               <a class="text-text-light dark:text-text-dark text-sm font-medium leading-normal hover:text-primary dark:hover:text-primary transition-colors"
+                href="#galeria">Galería</a>
+              <a class="text-text-light dark:text-text-dark text-sm font-medium leading-normal hover:text-primary dark:hover:text-primary transition-colors"
                 href="#sobre-nosotros">Sobre Nosotros</a>
+              <a class="text-text-light dark:text-text-dark text-sm font-medium leading-normal hover:text-primary dark:hover:text-primary transition-colors"
+                href="#testimonios">Testimonios</a>
+              <a class="text-text-light dark:text-text-dark text-sm font-medium leading-normal hover:text-primary dark:hover:text-primary transition-colors"
+                href="#votacion">Votación</a>
               <a class="text-text-light dark:text-text-dark text-sm font-medium leading-normal hover:text-primary dark:hover:text-primary transition-colors"
                 href="#contacto">Contacto</a>
             </nav>
@@ -153,7 +159,32 @@
               </div>
             </div>
           </section>
-          <section class="py-10 bg-white/50 dark:bg-background-dark/50 rounded-xl" id="sobre-nosotros">
+
+          <!-- NUEVA SECCIÓN: Galería Instagram -->
+          <section class="py-10 bg-white/50 dark:bg-background-dark/50" id="galeria">
+            <div class="mx-auto max-w-6xl px-4 text-center">
+              <h2 class="text-text-light dark:text-text-dark text-3xl font-bold mb-2">Nuestra Galería</h2>
+              <p class="text-primary dark:text-gray-400 mb-8">Descubre las últimas creaciones y momentos especiales de Magabv Dreams</p>
+              
+              <div id="instagram-gallery" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
+                <div class="animate-pulse bg-gray-300 dark:bg-gray-700 rounded-lg aspect-square"></div>
+                <div class="animate-pulse bg-gray-300 dark:bg-gray-700 rounded-lg aspect-square"></div>
+                <div class="animate-pulse bg-gray-300 dark:bg-gray-700 rounded-lg aspect-square"></div>
+                <div class="animate-pulse bg-gray-300 dark:bg-gray-700 rounded-lg aspect-square"></div>
+              </div>
+              
+              <a 
+                href="https://www.instagram.com/magabvdreams?igsh=MTAzOHh0emtvNWdoYQ==" 
+                target="_blank"
+                class="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold py-3 px-6 rounded-lg transition-all duration-200 transform hover:scale-105"
+              >
+                <span>📱</span>
+                Síguenos en Instagram
+              </a>
+            </div>
+          </section>
+
+          <section class="py-10" id="sobre-nosotros">
             <div class="flex flex-col lg:flex-row gap-10 px-4 py-10 @container items-center">
               <div class="flex-1">
                 <div class="flex flex-col gap-6">
@@ -230,6 +261,63 @@
               </div>
             </div>
           </section>
+
+          <!-- NUEVA SECCIÓN: Votación -->
+          <section class="py-10 bg-white/50 dark:bg-background-dark/50" id="votacion">
+            <div class="mx-auto max-w-2xl px-4 text-center">
+              <h2 class="text-text-light dark:text-text-dark text-3xl font-bold mb-2">Vota por tu pieza favorita</h2>
+              <p class="text-primary dark:text-gray-400 mb-8">Ayúdanos a conocer cuál es la joya que más te gusta de nuestra colección.</p>
+              
+              <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg">
+                <form id="form_voting" class="space-y-6">
+                  <div>
+                    <label class="block text-sm font-medium text-text-light dark:text-text-dark mb-2 text-left">
+                      Tu Nombre
+                    </label>
+                    <input 
+                      id="user_name"
+                      type="text" 
+                      placeholder="Ingresa tu nombre"
+                      class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-background-light dark:bg-gray-700 text-text-light dark:text-text-dark focus:ring-2 focus:ring-primary focus:border-transparent"
+                      required
+                    >
+                  </div>
+                  
+                  <div>
+                    <label class="block text-sm font-medium text-text-light dark:text-text-dark mb-2 text-left">
+                      Selecciona tu pieza favorita
+                    </label>
+                    <select 
+                      id="select_product"
+                      class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-background-light dark:bg-gray-700 text-text-light dark:text-text-dark focus:ring-2 focus:ring-primary focus:border-transparent"
+                      required
+                    >
+                      <option value="" disabled selected>Elige una joya</option>
+                      <option value="collar_celeste">Collar Celeste</option>
+                      <option value="anillo_dorado_sol">Anillo Dorado Sol</option>
+                      <option value="aretas_perla">Aretes de Perla</option>
+                      <option value="pulsera_cuarzo">Pulsera de Cuarzo</option>
+                    </select>
+                  </div>
+                  
+                  <button 
+                    type="submit"
+                    class="w-full bg-primary hover:bg-primary-dark text-white font-bold py-3 px-6 rounded-lg transition-colors duration-200"
+                  >
+                    Votar
+                  </button>
+                </form>
+                
+                <div class="mt-8">
+                  <h3 class="text-text-light dark:text-text-dark text-xl font-bold mb-4">Resultados de la Votación</h3>
+                  <div id="results" class="min-h-[200px] border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-4">
+                    <p class="text-gray-500 dark:text-gray-400 text-center mt-16">Los resultados aparecerán aquí...</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
           <section class="py-10" id="contacto">
             <div
               class="flex flex-col items-center gap-6 rounded-xl bg-white/50 dark:bg-background-dark/50 p-6 md:p-10 text-center">
@@ -275,12 +363,15 @@
       </div>
       <footer class="w-full bg-white/50 dark:bg-background-dark/50 mt-10">
         <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-6 text-center text-sm text-primary dark:text-gray-400">
-          <p>© 2024 Magabv Dreams. Todos los derechos reservados.</p>
+          <p>© 2025 Magabv Dreams. Todos los derechos reservados.</p>
         </div>
       </footer>
     </div>
   </div>
 
+  <!-- SCRIPTS -->
+  <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+  <script type="module" src="./js/file01.js"></script>
 </body>
 
 </html>
