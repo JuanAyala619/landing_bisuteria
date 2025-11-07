@@ -28,7 +28,7 @@ let saveVote = (productId, userName) => {
             message: "¡Voto guardado!"
         };
     })
-    .catch((error) => {
+    .catch(error => {
         return {
             status: false,
             message: "Error guardando voto"

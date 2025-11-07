@@ -37,7 +37,6 @@ let displayVotes = async () => {
             
             const voteCount = {};
             
-            // ESTILO GUÍA: for...in con hasOwnProperty
             for (let voteId in votes) {
                 if (votes.hasOwnProperty(voteId)) {
                     const vote = votes[voteId];
@@ -51,7 +50,6 @@ let displayVotes = async () => {
                 }
             }
             
-            // ESTILO GUÍA: for...in para crear filas
             for (let productId in voteCount) {
                 if (voteCount.hasOwnProperty(productId)) {
                     const count = voteCount[productId];
@@ -87,7 +85,6 @@ let loadInstagramGallery = async () => {
             const galleryContainer = document.getElementById('instagram-gallery');
             let galleryHTML = '';
             
-            // ESTILO GUÍA: for...in para recorrer imágenes
             for (let i = 0; i < images.length; i++) {
                 const image = images[i];
                 galleryHTML += `
