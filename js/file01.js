@@ -8,7 +8,7 @@ let enableForm = () => {
             event.preventDefault();
             const productId = document.getElementById("select_product").value;
             const userName = document.getElementById("user_name").value;
-            
+
             saveVote(productId, userName)
                 .then(response => {
                     alert(response.message);
@@ -34,14 +34,14 @@ let displayVotes = async () => {
                     </thead>
                     <tbody>
             `;
-            
+
             const voteCount = {};
-            
+
             for (let voteId in votes) {
                 if (votes.hasOwnProperty(voteId)) {
                     const vote = votes[voteId];
                     const productId = vote.productId;
-                    
+
                     if (voteCount[productId]) {
                         voteCount[productId]++;
                     } else {
@@ -49,7 +49,7 @@ let displayVotes = async () => {
                     }
                 }
             }
-            
+
             for (let productId in voteCount) {
                 if (voteCount.hasOwnProperty(productId)) {
                     const count = voteCount[productId];
@@ -81,19 +81,26 @@ let loadInstagramGallery = async () => {
     try {
         const galleryResult = await fetchInstagramGallery();
         if (galleryResult.success) {
-            const images = galleryResult.body;
+            const products = galleryResult.body;
             const galleryContainer = document.getElementById('instagram-gallery');
             let galleryHTML = '';
-            
-            for (let i = 0; i < images.length; i++) {
-                const image = images[i];
+
+            for (let i = 0; i < products.length; i++) {
+                const product = products[i];
                 galleryHTML += `
-                    <div>
-                        <img src="${image.url}" alt="${image.title}" class="w-full h-full object-cover rounded-lg">
-                    </div>
-                `;
+   <div class="space-y-4 bg-white dark:bg-gray-800 p-4 rounded-2xl shadow">
+       <img class="w-full h-40 rounded-lg object-cover"
+           src="${product.imgUrl}" alt="${product.title}">
+       <h3 class="text-xl font-semibold">${product.price}</h3>
+       <div>${product.title}</div>
+       <a href="${product.productURL}" target="_blank"
+           class="text-white bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center w-full inline-block">
+           Ver en Amazon
+       </a>
+   </div>
+`;
             }
-            
+
             galleryContainer.innerHTML = galleryHTML;
         }
     } catch (error) {
