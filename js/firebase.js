@@ -14,28 +14,27 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
-let saveVote = (productId, userName) => {
+let saveVote = (productId) => {
     const votesRef = ref(database, 'votes');
     const newVotesRef = push(votesRef);
     return set(newVotesRef, {
         productId: productId,
-        userName: userName,
         timestamp: Date.now()
     })
-    .then(() => {
-        return {
-            status: true,
-            message: "¡Voto guardado!"
-        };
-    })
-    .catch(error => {
-        return {
-            status: false,
-            message: "Error guardando voto"
-        };
-    });
+        .then(() => {
+            return {
+                status: true,
+                message: "Vote save successfully"
+            }
+        })
+        .catch((error) => {
+            console.error("Error saving votes ", error);
+            return {
+                status: false,
+                message: "Error saving vote"
+            }
+        });
 }
-
 let getVotes = () => {
     const votesRef = ref(database, 'votes');
     return get(votesRef)
@@ -45,19 +44,22 @@ let getVotes = () => {
                     status: true,
                     data: snapshot.val()
                 };
-            } else {
+            }
+            else {
                 return {
                     status: false,
-                    data: "No hay votos"
+                    data: "No data available"
                 };
             }
         })
         .catch((error) => {
+            console.error("Error getting votes:", error);
             return {
                 status: false,
-                data: "Error cargando votos"
+                data: "Error retrieving votes"
             };
-        });
-}
+        })
+
+};
 
 export { saveVote, getVotes };

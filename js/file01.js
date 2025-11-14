@@ -7,17 +7,18 @@ let enableForm = () => {
         form.addEventListener("submit", (event) => {
             event.preventDefault();
             const productId = document.getElementById("select_product").value;
-            const userName = document.getElementById("user_name").value;
-
-            saveVote(productId, userName)
+            saveVote(productId)
                 .then(response => {
-                    alert(response.message);
-                    displayVotes();
+                    if (response.status) {
+                        alert(response.message);
+                    }
+                    else {
+                        alert(response.message);
+                    }
                 });
         });
     }
 }
-
 let displayVotes = async () => {
     try {
         const votesResult = await getVotes();
@@ -25,47 +26,34 @@ let displayVotes = async () => {
             const votes = votesResult.data;
             const resultsContainer = document.getElementById('results');
             let tableHTML = `
-                <table class="min-w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600">
-                    <thead>
-                        <tr class="bg-gray-100 dark:bg-gray-700">
-                            <th class="py-2 px-4 border-b border-gray-300 dark:border-gray-600 text-left">Producto</th>
-                            <th class="py-2 px-4 border-b border-gray-300 dark:border-gray-600 text-left">Votos</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            `;
-
+    <table class="min-w-full bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-500">
+        <thead>
+            <tr class="bg-gray-100 dark:bg-gray-600">
+                <th class="py-2 px-4 border-b border-gray-300 dark:border-gray-500 text-left text-gray-900 dark:text-white">Producto Votado</th>
+                <th class="py-2 px-4 border-b border-gray-300 dark:border-gray-500 text-left text-gray-900 dark:text-white">Total de Votos</th>
+            </tr>
+        </thead>
+        <tbody>
+`;
             const voteCount = {};
-
-            for (let voteId in votes) {
-                if (votes.hasOwnProperty(voteId)) {
-                    const vote = votes[voteId];
-                    const productId = vote.productId;
-
-                    if (voteCount[productId]) {
-                        voteCount[productId]++;
-                    } else {
-                        voteCount[productId] = 1;
-                    }
-                }
-            }
-
-            for (let productId in voteCount) {
-                if (voteCount.hasOwnProperty(productId)) {
-                    const count = voteCount[productId];
-                    tableHTML += `
-                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                            <td class="py-2 px-4 border-b border-gray-300 dark:border-gray-600">${productId}</td>
-                            <td class="py-2 px-4 border-b border-gray-300 dark:border-gray-600">${count}</td>
-                        </tr>
-                    `;
-                }
-            }
+            Object.values(votes).forEach(vote => {
+                const productId = vote.productId;
+                voteCount[productId] = (voteCount[productId] || 0) + 1;
+            });
+            Object.entries(voteCount).forEach(([productId, count]) => {
+                tableHTML += `
+    <tr class="hover:bg-gray-50 dark:hover:bg-gray-600">
+        <td class="py-2 px-4 border-b border-gray-300 dark:border-gray-500 text-gray-800 dark:text-gray-200">${productId}</td>
+        <td class="py-2 px-4 border-b border-gray-300 dark:border-gray-500 text-gray-800 dark:text-gray-200">${count}</td>
+    </tr>
+`;
+            });
 
             tableHTML += `
                     </tbody>
                 </table>
             `;
+
             resultsContainer.innerHTML = tableHTML;
         }
         else {
@@ -73,6 +61,7 @@ let displayVotes = async () => {
         }
     }
     catch (error) {
+        console.error('Error al mostrar votos:', error);
         document.getElementById('results').innerHTML = '<p>Error al cargar los votos</p>';
     }
 }
