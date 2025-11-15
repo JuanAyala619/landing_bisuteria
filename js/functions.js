@@ -1,25 +1,25 @@
 'use strict';
-
-let fetchInstagramGallery = () => {
-    return fetch("https://data-dawm.github.io/datum/reseller/products.json")
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`Error HTTP: ${response.status}`);
+let fetchMateriales = async () => {
+    try{
+        let respuesta= await fetch("https://data-dawm.github.io/datum/reseller/products.json")
+        if(!respuesta.ok){
+            throw new Error(`Error HTTP: ${respuesta.status}`);
         }
-        return response.json();
-    })
-    .then(data => {
-        return {
-            success: true,
-            body: data.slice(0, 8) 
+        else{
+            const datos= await respuesta.json();
+            return{
+                success:true,
+                body:datos
+            };
+        }
+    }
+    catch(error){
+        return{
+            success:false,
+            body:error.message
         };
-    })
-    .catch(error => {
-        return {
-            success: false,
-            body: error.message
-        };
-    });
+    }
 }
 
-export {  fetchInstagramGallery };
+
+export {  fetchMateriales };

@@ -1,4 +1,4 @@
-import { fetchInstagramGallery } from './functions.js';
+import { fetchMateriales } from './functions.js';
 import { saveVote, getVotes } from './firebase.js';
 
 let enableForm = () => {
@@ -66,31 +66,29 @@ let displayVotes = async () => {
     }
 }
 
-let loadInstagramGallery = async () => {
+let cargaMateriales = async () => {
     try {
-        const galleryResult = await fetchInstagramGallery();
-        if (galleryResult.success) {
-            const products = galleryResult.body;
-            const galleryContainer = document.getElementById('instagram-gallery');
-            let galleryHTML = '';
+        let respuesta = await fetchMateriales();
+        if (respuesta.success) {
+            const productos = respuesta.body.slice(0,8);
+            const container = document.getElementById('instagram-gallery');
+            let containerHTML = '';
 
-            for (let i = 0; i < products.length; i++) {
-                const product = products[i];
-                galleryHTML += `
+            productos.forEach(producto=>{     
+                containerHTML += `
    <div class="space-y-4 bg-white dark:bg-gray-800 p-4 rounded-2xl shadow">
        <img class="w-full h-40 rounded-lg object-cover"
-           src="${product.imgUrl}" alt="${product.title}">
-       <h3 class="text-xl font-semibold">${product.price}</h3>
-       <div>${product.title}</div>
-       <a href="${product.productURL}" target="_blank"
+           src="${producto.imgUrl}" alt="${producto.title}">
+       <h3 class="text-xl font-semibold">${producto.price}</h3>
+       <div>${producto.title}</div>
+       <a href="${producto.productURL}" target="_blank"
            class="text-white bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center w-full inline-block">
            Ver en Amazon
        </a>
    </div>
-`;
-            }
+`             });
 
-            galleryContainer.innerHTML = galleryHTML;
+            container.innerHTML = containerHTML;
         }
     } catch (error) {
         console.error('Error loading gallery:', error);
@@ -100,5 +98,5 @@ let loadInstagramGallery = async () => {
 (() => {
     enableForm();
     displayVotes();
-    loadInstagramGallery();
+    cargaMateriales();
 })();
